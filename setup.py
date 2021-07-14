@@ -9,6 +9,8 @@ try:
     from pip.req import parse_requirements
 except ImportError:  # pip >= 10.0.0
     from pip._internal.req import parse_requirements
+except AttributeError:
+    from pip._vendor.pkg_resources import parse_requirements
 
 WORK_DIR = pathlib.Path(__file__).parent
 
@@ -52,7 +54,12 @@ def get_requirements(filename=None):
     file = WORK_DIR / filename
 
     install_reqs = parse_requirements(str(file), session='hack')
-    return [str(ir.req) for ir in install_reqs]
+    install_reqs = list(install_reqs)
+    try:
+        requirements = [str(ir.req) for ir in install_reqs]
+    except AttributeError:
+        requirements = [str(ir.requirement) for ir in install_reqs]
+    return requirements
 
 
 setup(

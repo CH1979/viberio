@@ -1,8 +1,11 @@
 .idea/*
 .env/*
 venv/*
+env/
+
 *.py[cod]
 __pycache__
+
 build/*
 dist/*
 *.egg-info
