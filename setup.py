@@ -9,6 +9,8 @@ try:
     from pip.req import parse_requirements
 except ImportError:  # pip >= 10.0.0
     from pip._internal.req import parse_requirements
+except AttributeError:
+    from pip._vendor.pkg_resources import parse_requirements
 
 WORK_DIR = pathlib.Path(__file__).parent
 
